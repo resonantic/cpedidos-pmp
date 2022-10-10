@@ -1,0 +1,14 @@
+name: Runs CI on PR
+
+on: pull_request
+
+jobs:
+  ci:
+    name: Runs CI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository Checkout
+        uses: actions/checkout@v2
+
+      - name: Runs CI and Build
+        run: npm ci && npm run build
