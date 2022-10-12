@@ -1,9 +1,9 @@
-import { Meta, StoryObj } from "@storybook/react";
-import { Center, CenterProps } from "./Center";
-import { Text } from "./Text";
+import { Meta, StoryObj } from '@storybook/react';
+import { Center, CenterProps } from './Center';
+import { Text } from './Text';
 
 export default {
-  title: "Components/Center",
+  title: 'Components/Center',
   component: Center,
   args: {
     children: <Text>lorem ipsum</Text>,

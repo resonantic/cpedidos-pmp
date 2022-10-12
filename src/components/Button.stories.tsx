@@ -1,11 +1,11 @@
-import { Meta, StoryObj } from "@storybook/react";
-import { Button, ButtonProps } from "./Button";
+import { Meta, StoryObj } from '@storybook/react';
+import { Button, ButtonProps } from './Button';
 
 export default {
-  title: "Components/Button",
+  title: 'Components/Button',
   component: Button,
   args: {
-    children: "Submit",
+    children: 'Submit',
   },
   argTypes: {
     asChild: {
