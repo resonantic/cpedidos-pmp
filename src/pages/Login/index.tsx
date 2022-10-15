@@ -17,7 +17,7 @@ export function Login() {
 
       <form className="flex flex-col gap-4 items-stretch w-full max-w-sm mt-10">
         <label htmlFor="email" className="flex flex-col gap-3">
-          <span className="text-neutral-100 font-sans font-semibold">
+          <span className="text-neutral-100 font-sans font-semibold text-sm">
             E-mail
           </span>
 
@@ -34,7 +34,7 @@ export function Login() {
         </label>
 
         <label htmlFor="password" className="flex flex-col gap-3">
-          <span className="text-neutral-100 font-sans font-semibold">
+          <span className="text-neutral-100 font-sans font-semibold text-sm">
             Senha
           </span>
 

@@ -14,7 +14,7 @@ export function Orders() {
       <form className="flex flex-col px-5 gap-4 mt-10 w-full max-w-5xl">
         <div className="flex flex-row gap-4">
           <label htmlFor="number" className="flex flex-col gap-3 w-full">
-            <span className="text-neutral-100 font-sans font-semibold">
+            <span className="text-neutral-100 font-sans font-semibold text-sm">
               Número
             </span>
 
@@ -28,7 +28,7 @@ export function Orders() {
           </label>
 
           <label htmlFor="type" className="flex flex-col gap-3 w-full">
-            <span className="text-neutral-100 font-sans font-semibold">
+            <span className="text-neutral-100 font-sans font-semibold text-sm">
               Tipo
             </span>
 
@@ -46,7 +46,7 @@ export function Orders() {
 
         <div className="flex flex-row gap-4">
           <label htmlFor="arrivalDate" className="flex flex-col gap-3 w-full">
-            <span className="text-neutral-100 font-sans font-semibold">
+            <span className="text-neutral-100 font-sans font-semibold text-sm">
               Data de Chegada
             </span>
 
@@ -60,7 +60,7 @@ export function Orders() {
           </label>
 
           <label htmlFor="secretary" className="flex flex-col gap-3 w-full">
-            <span className="text-neutral-100 font-sans font-semibold">
+            <span className="text-neutral-100 font-sans font-semibold text-sm">
               Secretaria
             </span>
 
@@ -74,7 +74,7 @@ export function Orders() {
           </label>
 
           <label htmlFor="project" className="flex flex-col gap-3 w-full">
-            <span className="text-neutral-100 font-sans font-semibold">
+            <span className="text-neutral-100 font-sans font-semibold text-sm">
               Projeto
             </span>
 
@@ -90,7 +90,7 @@ export function Orders() {
 
         <div className="flex flex-row gap-4">
           <label htmlFor="description" className="flex flex-col gap-3 w-full">
-            <span className="text-neutral-100 font-sans font-semibold">
+            <span className="text-neutral-100 font-sans font-semibold text-sm">
               Descrição
             </span>
 
@@ -106,7 +106,7 @@ export function Orders() {
 
         <div className="flex flex-row gap-4">
           <label htmlFor="sendDate" className="flex flex-col gap-3 w-full">
-            <span className="text-neutral-100 font-sans font-semibold">
+            <span className="text-neutral-100 font-sans font-semibold text-sm">
               Data de Envio ao Financeiro
             </span>
 
@@ -120,7 +120,7 @@ export function Orders() {
           </label>
 
           <label htmlFor="returnDate" className="flex flex-col gap-3 w-full">
-            <span className="text-neutral-100 font-sans font-semibold">
+            <span className="text-neutral-100 font-sans font-semibold text-sm">
               Data de Retorno do Financeiro
             </span>
 
@@ -134,7 +134,7 @@ export function Orders() {
           </label>
 
           <label htmlFor="situation" className="flex flex-col gap-3 w-full">
-            <span className="text-neutral-100 font-sans font-semibold">
+            <span className="text-neutral-100 font-sans font-semibold text-sm">
               Situação
             </span>
 
@@ -150,7 +150,7 @@ export function Orders() {
 
         <div className="flex flex-row gap-4">
           <label htmlFor="notes" className="flex flex-col gap-3 w-full">
-            <span className="text-neutral-100 font-sans font-semibold">
+            <span className="text-neutral-100 font-sans font-semibold text-sm">
               Observações
             </span>
 
