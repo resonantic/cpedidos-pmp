@@ -10,27 +10,6 @@ module.exports = {
       xl: 24,
       '2xl': 32,
     },
-    colors: {
-      transparent: 'transparent',
-      black: '#000',
-      white: '#fff',
-      gray: {
-        900: '#121214',
-        800: '#202024',
-        700: '#29292e',
-        400: '#7c7c8a',
-        200: '#c4c4cc',
-        100: '#e1e1e6',
-      },
-      indigo: {
-        500: '#6366f1',
-        400: '#818cf8',
-      },
-      red: {
-        500: '#ef4444',
-        400: '#f87171',
-      },
-    },
     extend: {
       fontFamily: {
         sans: 'Inter, sans-serif',

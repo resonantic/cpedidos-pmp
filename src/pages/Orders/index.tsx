@@ -8,33 +8,35 @@ export function Orders() {
   function handleDelete() {}
 
   return (
-    <div className="w-screen min-h-screen bg-gray-900 flex flex-col items-center text-gray-100">
+    <div className="w-screen min-h-screen bg-neutral-900 flex flex-col items-center text-neutral-100">
       <TopBar />
 
       <form className="flex flex-col px-5 gap-4 mt-10 w-full max-w-5xl">
         <div className="flex flex-row gap-4">
           <label htmlFor="number" className="flex flex-col gap-3 w-full">
-            <span className="text-gray-100 font-sans font-semibold">
+            <span className="text-neutral-100 font-sans font-semibold">
               Número
             </span>
 
-            <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-gray-800 focus-within:ring-2 ring-indigo-400 ">
+            <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400 ">
               <input
                 type="text"
                 id="number"
-                className="bg-transparent flex-1 text-gray-100 text-xs placeholder:text-gray-400 outline-none"
+                className="bg-transparent flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none"
               />
             </div>
           </label>
 
           <label htmlFor="type" className="flex flex-col gap-3 w-full">
-            <span className="text-gray-100 font-sans font-semibold">Tipo</span>
+            <span className="text-neutral-100 font-sans font-semibold">
+              Tipo
+            </span>
 
-            <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-gray-800 focus-within:ring-2 ring-indigo-400 ">
+            <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400 ">
               <input
                 type="text"
                 id="type"
-                className="bg-transparent flex-1 text-gray-100 text-xs placeholder:text-gray-400 outline-none"
+                className="bg-transparent flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none"
               />
             </div>
           </label>
@@ -44,43 +46,43 @@ export function Orders() {
 
         <div className="flex flex-row gap-4">
           <label htmlFor="arrivalDate" className="flex flex-col gap-3 w-full">
-            <span className="text-gray-100 font-sans font-semibold">
+            <span className="text-neutral-100 font-sans font-semibold">
               Data de Chegada
             </span>
 
-            <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-gray-800 focus-within:ring-2 ring-indigo-400 ">
+            <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400 ">
               <input
                 type="text"
                 id="arrivalDate"
-                className="bg-transparent flex-1 text-gray-100 text-xs placeholder:text-gray-400 outline-none"
+                className="bg-transparent flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none"
               />
             </div>
           </label>
 
           <label htmlFor="secretary" className="flex flex-col gap-3 w-full">
-            <span className="text-gray-100 font-sans font-semibold">
+            <span className="text-neutral-100 font-sans font-semibold">
               Secretaria
             </span>
 
-            <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-gray-800 focus-within:ring-2 ring-indigo-400 ">
+            <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400 ">
               <input
                 type="text"
                 id="secretary"
-                className="bg-transparent flex-1 text-gray-100 text-xs placeholder:text-gray-400 outline-none"
+                className="bg-transparent flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none"
               />
             </div>
           </label>
 
           <label htmlFor="project" className="flex flex-col gap-3 w-full">
-            <span className="text-gray-100 font-sans font-semibold">
+            <span className="text-neutral-100 font-sans font-semibold">
               Projeto
             </span>
 
-            <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-gray-800 focus-within:ring-2 ring-indigo-400 ">
+            <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400 ">
               <input
                 type="text"
                 id="project"
-                className="bg-transparent flex-1 text-gray-100 text-xs placeholder:text-gray-400 outline-none"
+                className="bg-transparent flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none"
               />
             </div>
           </label>
@@ -88,15 +90,15 @@ export function Orders() {
 
         <div className="flex flex-row gap-4">
           <label htmlFor="description" className="flex flex-col gap-3 w-full">
-            <span className="text-gray-100 font-sans font-semibold">
+            <span className="text-neutral-100 font-sans font-semibold">
               Descrição
             </span>
 
-            <div className="flex items-center h-25 py-4 px-3 rounded w-full bg-gray-800 focus-within:ring-2 ring-indigo-400 ">
+            <div className="flex items-center h-25 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400 ">
               <textarea
                 id="description"
                 rows={4}
-                className="bg-transparent flex-1 text-gray-100 text-xs placeholder:text-gray-400 outline-none resize-none"
+                className="bg-transparent flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none resize-none"
               />
             </div>
           </label>
@@ -104,43 +106,43 @@ export function Orders() {
 
         <div className="flex flex-row gap-4">
           <label htmlFor="sendDate" className="flex flex-col gap-3 w-full">
-            <span className="text-gray-100 font-sans font-semibold">
+            <span className="text-neutral-100 font-sans font-semibold">
               Data de Envio ao Financeiro
             </span>
 
-            <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-gray-800 focus-within:ring-2 ring-indigo-400 ">
+            <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400 ">
               <input
                 type="text"
                 id="sendDate"
-                className="bg-transparent flex-1 text-gray-100 text-xs placeholder:text-gray-400 outline-none"
+                className="bg-transparent flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none"
               />
             </div>
           </label>
 
           <label htmlFor="returnDate" className="flex flex-col gap-3 w-full">
-            <span className="text-gray-100 font-sans font-semibold">
+            <span className="text-neutral-100 font-sans font-semibold">
               Data de Retorno do Financeiro
             </span>
 
-            <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-gray-800 focus-within:ring-2 ring-indigo-400 ">
+            <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400 ">
               <input
                 type="text"
                 id="returnDate"
-                className="bg-transparent flex-1 text-gray-100 text-xs placeholder:text-gray-400 outline-none"
+                className="bg-transparent flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none"
               />
             </div>
           </label>
 
           <label htmlFor="situation" className="flex flex-col gap-3 w-full">
-            <span className="text-gray-100 font-sans font-semibold">
+            <span className="text-neutral-100 font-sans font-semibold">
               Situação
             </span>
 
-            <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-gray-800 focus-within:ring-2 ring-indigo-400 ">
+            <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400 ">
               <input
                 type="text"
                 id="situation"
-                className="bg-transparent flex-1 text-gray-100 text-xs placeholder:text-gray-400 outline-none"
+                className="bg-transparent flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none"
               />
             </div>
           </label>
@@ -148,15 +150,15 @@ export function Orders() {
 
         <div className="flex flex-row gap-4">
           <label htmlFor="notes" className="flex flex-col gap-3 w-full">
-            <span className="text-gray-100 font-sans font-semibold">
+            <span className="text-neutral-100 font-sans font-semibold">
               Observações
             </span>
 
-            <div className="flex items-center h-25 py-4 px-3 rounded w-full bg-gray-800 focus-within:ring-2 ring-indigo-400 ">
+            <div className="flex items-center h-25 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400 ">
               <textarea
                 id="notes"
                 rows={4}
-                className="bg-transparent flex-1 text-gray-100 text-xs placeholder:text-gray-400 outline-none resize-none"
+                className="bg-transparent flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none resize-none"
               />
             </div>
           </label>
