@@ -34,11 +34,16 @@ export function Orders() {
             </span>
 
             <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400 ">
-              <input
-                type="text"
+              <select
                 id="type"
                 className="bg-transparent flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none"
-              />
+              >
+                {['SE', 'RM', 'MEMORANDO', 'OUTRO'].map((type) => (
+                  <option value={type} key={type} className="bg-neutral-800">
+                    {type}
+                  </option>
+                ))}
+              </select>
             </div>
           </label>
 
@@ -51,7 +56,7 @@ export function Orders() {
               Data de Chegada
             </span>
 
-            <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400 ">
+            <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400">
               <input
                 type="text"
                 id="arrivalDate"
