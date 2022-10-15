@@ -26,6 +26,10 @@ module.exports = {
         500: '#6366f1',
         400: '#818cf8',
       },
+      red: {
+        500: '#ef4444',
+        400: '#f87171',
+      },
     },
     extend: {
       fontFamily: {
