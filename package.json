@@ -12,8 +12,6 @@
     "format": "yarn run lint --fix & yarn prettier --write 'src/**/*.{js,jsx,ts,tsx}'"
   },
   "dependencies": {
-    "@radix-ui/react-checkbox": "^1.0.0",
-    "@radix-ui/react-slot": "^1.0.0",
     "clsx": "^1.2.1",
     "firebase": "^9.11.0",
     "phosphor-react": "^1.4.1",
