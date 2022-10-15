@@ -1,3 +1,4 @@
+import { Eraser, FloppyDisk, Trash } from 'phosphor-react';
 import { TopBar } from '../../components/TopBar';
 
 export function Orders() {
@@ -167,25 +168,28 @@ export function Orders() {
         <div className="flex flex-row gap-4">
           <button
             type="submit"
-            className="mt-4 py-3 px-4 w-full h-12 rounded text-sm text-white font-semibold bg-indigo-500 transition-colors hover:bg-indigo-400 focus:ring-2 ring-white"
+            className="flex items-center justify-center gap-3 mt-4 py-3 px-4 w-full h-12 rounded text-sm text-white font-semibold bg-green-600 transition-colors hover:bg-green-500 focus:ring-2 ring-white"
             onClick={handleSave}
           >
+            <FloppyDisk className="w-5 h-5" />
             Salvar
           </button>
 
           <button
             type="button"
-            className="mt-4 py-3 px-4 w-full h-12 rounded text-sm text-white font-semibold bg-indigo-500 transition-colors hover:bg-indigo-400 focus:ring-2 ring-white"
+            className="flex items-center justify-center gap-3 mt-4 py-3 px-4 w-full h-12 rounded text-sm text-white font-semibold bg-indigo-600 transition-colors hover:bg-indigo-500 focus:ring-2 ring-white"
             onClick={handleClear}
           >
+            <Eraser className="w-5 h-5" />
             Limpar
           </button>
 
           <button
             type="button"
-            className="mt-4 py-3 px-4 w-full h-12 rounded text-sm text-white font-semibold bg-red-500 transition-colors hover:bg-red-400 focus:ring-2 ring-white"
+            className="flex items-center justify-center gap-3 mt-4 py-3 px-4 w-full h-12 rounded text-sm text-white font-semibold bg-red-600 transition-colors hover:bg-red-500 focus:ring-2 ring-white"
             onClick={handleDelete}
           >
+            <Trash className="w-5 h-5" />
             Excluir
           </button>
         </div>
