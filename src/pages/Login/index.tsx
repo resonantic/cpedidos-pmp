@@ -48,7 +48,7 @@ export function Login() {
 
         <button
           type="submit"
-          className="mt-4 py-3 px-4 w-full rounded text-sm text-white font-semibold bg-indigo-500 transition-colors hover:bg-indigo-400 focus:ring-2 ring-white"
+          className="mt-4 py-3 px-4 w-full h-12 rounded text-sm text-white font-semibold bg-indigo-500 transition-colors hover:bg-indigo-400 focus:ring-2 ring-white"
           onClick={handleSubmit}
         >
           Entrar na Plataforma
