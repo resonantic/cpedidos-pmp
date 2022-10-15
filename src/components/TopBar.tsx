@@ -1,6 +1,6 @@
 export function TopBar() {
   return (
-    <div className="flex flex-row gap-5 items-center px-5 py-2 h-16 w-auto bg-gray-800">
+    <div className="flex flex-row gap-5 items-center px-5 py-2 h-16 w-full bg-gray-800">
       <h2 className="font-bold text-xl text-gray-100 whitespace-nowrap">
         Controle de Pedidos
       </h2>
