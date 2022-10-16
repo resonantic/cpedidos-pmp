@@ -7,7 +7,7 @@ jobs:
     name: Runs CI
     runs-on: ubuntu-latest
     steps:
-      - name: Repository Checkout
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
       - name: Setup Node.js
@@ -15,5 +15,19 @@ jobs:
         with:
           node-version: 16
 
-      - name: Runs CI and Build
-        run: npm ci && npm run build
+      - name: Install Dependencies
+        run: yarn
+
+      - name: Run Tests
+        run: yarn test --coverage
+
+      - name: Run Linting
+        run: yarn lint
+
+      - name: Run Build
+        run: yarn build
+
+      - name: Check Commit Message
+        uses: wagoid/commitlint-github-action@v5
+        with:
+          configFile: .commitlintrc.json

@@ -10,7 +10,7 @@ jobs:
     name: Build and Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Repository Checkout
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
       - name: Setup Node.js
@@ -18,8 +18,11 @@ jobs:
         with:
           node-version: 16
 
-      - name: Build App
-        run: npm run build
+      - name: Install Dependencies
+        run: yarn
+
+      - name: Run Build
+        run: yarn build
 
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
