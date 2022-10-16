@@ -1,6 +1,7 @@
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Envelope, Lock, SignIn } from 'phosphor-react';
 import { useForm } from 'react-hook-form';
+import { Button } from '../../components/buttons/Button';
 import { auth } from '../../config/firebase';
 
 type IFormInputs = {
@@ -69,14 +70,10 @@ export function Login() {
           </div>
         </label>
 
-        <button
-          type="submit"
-          className="flex items-center justify-center gap-3 mt-4 py-3 px-4 w-full h-12 rounded text-sm text-white font-semibold bg-indigo-600 transition-colors hover:bg-indigo-500 focus:ring-2 ring-white"
-          disabled={!canSubmit}
-        >
+        <Button type="submit" intent="primary" disabled={!canSubmit}>
           <SignIn className="w-5 h-5" />
-          Entrar na Plataforma
-        </button>
+          <span>Entrar na Plataforma</span>
+        </Button>
       </form>
     </div>
   );

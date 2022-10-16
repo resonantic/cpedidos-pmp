@@ -1,7 +1,8 @@
 import { Eraser, FloppyDisk, Trash } from 'phosphor-react';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { TopBar } from '../../components/TopBar';
+import { Button } from '../../components/buttons/Button';
+import { NavBar } from '../../components/layout/NavBar';
 
 type IFormInputs = {
   number: string;
@@ -17,8 +18,7 @@ type IFormInputs = {
 };
 
 export function Orders() {
-  const { register, handleSubmit, reset, watch, getValues } =
-    useForm<IFormInputs>();
+  const { register, handleSubmit, reset, watch } = useForm<IFormInputs>();
 
   const onSave = handleSubmit((data: IFormInputs) => {
     console.log(data);
@@ -36,16 +36,18 @@ export function Orders() {
 
   const canDelete = true;
 
-  const mustSearch = watch(['number', 'type']);
-
   useEffect(() => {
-    const { number, type } = getValues();
-    console.log('search', number, type);
-  }, [mustSearch, getValues]);
+    const sub = watch(({ number, type }, { name }) => {
+      if (name === 'number' || name === 'type') {
+        console.log('search', number, type);
+      }
+    });
+    return sub.unsubscribe;
+  }, [watch]);
 
   return (
     <div className="w-screen min-h-screen bg-neutral-900 flex flex-col items-center text-neutral-100">
-      <TopBar />
+      <NavBar />
 
       <form
         onSubmit={onSave}
@@ -219,34 +221,20 @@ export function Orders() {
         </div>
 
         <div className="flex flex-row gap-4">
-          <button
-            type="submit"
-            className="flex items-center justify-center gap-3 mt-4 py-3 px-4 w-full h-12 rounded text-sm text-white font-semibold bg-green-600 transition-colors hover:bg-green-500 focus:ring-2 ring-white disabled:hover:bg-green-600 disabled:opacity-50"
-            disabled={!canSave}
-          >
+          <Button type="submit" intent="success" disabled={!canSave}>
             <FloppyDisk className="w-5 h-5" />
-            Salvar
-          </button>
+            <span>Salvar</span>
+          </Button>
 
-          <button
-            type="button"
-            className="flex items-center justify-center gap-3 mt-4 py-3 px-4 w-full h-12 rounded text-sm text-white font-semibold bg-indigo-600 transition-colors hover:bg-indigo-500 focus:ring-2 ring-white disabled:hover:bg-indigo-600 disabled:opacity-50"
-            disabled={!canClear}
-            onClick={onClear}
-          >
+          <Button intent="primary" disabled={!canClear} onClick={onClear}>
             <Eraser className="w-5 h-5" />
-            Limpar
-          </button>
+            <span>Limpar</span>
+          </Button>
 
-          <button
-            type="button"
-            className="flex items-center justify-center gap-3 mt-4 py-3 px-4 w-full h-12 rounded text-sm text-white font-semibold bg-red-600 transition-colors hover:bg-red-500 focus:ring-2 ring-white disabled:hover:bg-red-600 disabled:opacity-50"
-            disabled={!canDelete}
-            onClick={onDelete}
-          >
+          <Button intent="error" disabled={!canDelete} onClick={onDelete}>
             <Trash className="w-5 h-5" />
-            Excluir
-          </button>
+            <span>Excluir</span>
+          </Button>
         </div>
       </form>
     </div>
