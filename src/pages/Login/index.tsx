@@ -1,7 +1,19 @@
 import { Envelope, Lock, SignIn } from 'phosphor-react';
+import { useForm } from 'react-hook-form';
+
+type IFormInputs = {
+  email: string;
+  password: string;
+};
 
 export function Login() {
-  function handleSubmit() {}
+  const { register, handleSubmit } = useForm<IFormInputs>();
+
+  const onSubmit = handleSubmit((data: IFormInputs) => {
+    console.log(data);
+  });
+
+  const canSubmit = true;
 
   return (
     <div className="w-screen h-screen bg-neutral-900 flex flex-col items-center justify-center text-neutral-100">
@@ -15,16 +27,20 @@ export function Login() {
         </span>
       </header>
 
-      <form className="flex flex-col gap-4 items-stretch w-full max-w-sm mt-10">
+      <form
+        onSubmit={onSubmit}
+        className="flex flex-col gap-4 items-stretch w-full max-w-sm mt-10"
+      >
         <label htmlFor="email" className="flex flex-col gap-3">
           <span className="text-neutral-100 font-sans font-semibold text-sm">
             E-mail
           </span>
 
-          <div className="flex items-center gap-3 h-12 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400 ">
+          <div className="flex items-center gap-3 h-12 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400">
             <Envelope className="w-6 h-6 text-neutral-400" />
 
             <input
+              {...register('email')}
               type="email"
               id="email"
               placeholder="usuario@exemplo.com.br"
@@ -38,10 +54,11 @@ export function Login() {
             Senha
           </span>
 
-          <div className="flex items-center gap-3 h-12 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400 ">
+          <div className="flex items-center gap-3 h-12 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400">
             <Lock className="w-6 h-6 text-neutral-400" />
 
             <input
+              {...register('password')}
               type="password"
               id="password"
               placeholder="********"
@@ -53,7 +70,7 @@ export function Login() {
         <button
           type="submit"
           className="flex items-center justify-center gap-3 mt-4 py-3 px-4 w-full h-12 rounded text-sm text-white font-semibold bg-indigo-600 transition-colors hover:bg-indigo-500 focus:ring-2 ring-white"
-          onClick={handleSubmit}
+          disabled={!canSubmit}
         >
           <SignIn className="w-5 h-5" />
           Entrar na Plataforma
