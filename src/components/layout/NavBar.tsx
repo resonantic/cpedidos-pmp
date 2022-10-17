@@ -1,29 +1,18 @@
 import {
-  onAuthStateChanged,
-  signOut,
-  User as FirebaseUser,
-} from 'firebase/auth';
-import {
   CircleNotch,
   ClipboardText,
   ShoppingCart,
   SignOut,
 } from 'phosphor-react';
-import { useEffect, useState } from 'react';
-import { auth } from '../../config/firebase';
+import { useAuth } from '../../hooks/useAuth';
 import { NavButton } from '../buttons/NavButton';
 import { NavLinkButton } from '../buttons/NavLinkButton';
 
 export function NavBar() {
-  const [user, setUser] = useState<FirebaseUser | null>(null);
-
-  useEffect(() => {
-    const sub = onAuthStateChanged(auth, setUser);
-    return sub;
-  }, []);
+  const { user, logout } = useAuth();
 
   const onLogout = () => {
-    signOut(auth);
+    logout();
   };
 
   return (

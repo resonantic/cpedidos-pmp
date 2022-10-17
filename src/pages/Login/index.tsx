@@ -1,8 +1,7 @@
-import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Envelope, Lock, SignIn } from 'phosphor-react';
 import { useForm } from 'react-hook-form';
 import { Button } from '../../components/buttons/Button';
-import { auth } from '../../config/firebase';
+import { useAuth } from '../../hooks/useAuth';
 
 type IFormInputs = {
   email: string;
@@ -11,9 +10,10 @@ type IFormInputs = {
 
 export function Login() {
   const { register, handleSubmit } = useForm<IFormInputs>();
+  const { login } = useAuth();
 
   const onSubmit = handleSubmit(({ email, password }: IFormInputs) => {
-    signInWithEmailAndPassword(auth, email, password);
+    login(email, password);
   });
 
   const canSubmit = true;
