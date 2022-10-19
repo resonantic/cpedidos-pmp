@@ -23,7 +23,8 @@ export function Orders() {
         reset(order ?? { ...emptyOrder(), number, type });
       }
     },
-    [getOrder, emptyOrder, reset, getValues]
+    [getOrder, emptyOrder, reset, getValues],
+    400
   );
 
   const onSave = handleSubmit(async (data: IFormInputs) => {
