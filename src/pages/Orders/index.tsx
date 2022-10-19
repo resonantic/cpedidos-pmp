@@ -3,31 +3,37 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '../../components/buttons/Button';
 import { NavBar } from '../../components/layout/NavBar';
+import { useDebouncedCallback } from '../../hooks/useDebouncedCallback';
+import { useOrder } from '../../hooks/useOrder';
+import { Order, OrderType } from '../../models/order';
 
-type IFormInputs = {
-  number: string;
-  type: 'SE' | 'RM' | 'MEMORANDO' | 'OUTRO';
-  arrivalDate: string;
-  secretary: string;
-  project: string;
-  description: string;
-  sendDate: string;
-  returnDate: string;
-  situation: string;
-  notes: string;
-};
+type IFormInputs = Order;
 
 export function Orders() {
-  const { register, handleSubmit, reset, watch } = useForm<IFormInputs>();
+  const { register, handleSubmit, reset, watch, getValues } =
+    useForm<IFormInputs>();
+  const { emptyOrder, getOrder, saveOrder, deleteOrder } = useOrder();
 
-  const onSave = handleSubmit((data: IFormInputs) => {
-    console.log(data);
+  const onSearch = useDebouncedCallback(
+    async (number: string, type: OrderType) => {
+      const order = await getOrder(number, type);
+      const formValues = getValues(['number', 'type']);
+
+      if (number === formValues[0] && type === formValues[1]) {
+        reset(order ?? { ...emptyOrder(), number, type });
+      }
+    },
+    [getOrder, emptyOrder, reset, getValues]
+  );
+
+  const onSave = handleSubmit(async (data: IFormInputs) => {
+    saveOrder(data);
   });
 
-  const onClear = () => reset();
+  const onClear = () => reset({ ...emptyOrder() });
 
-  const onDelete = handleSubmit(({ number, type }: IFormInputs) => {
-    console.log(number, type);
+  const onDelete = handleSubmit(async ({ number, type }: IFormInputs) => {
+    deleteOrder(number, type);
   });
 
   const canSave = true;
@@ -37,13 +43,17 @@ export function Orders() {
   const canDelete = true;
 
   useEffect(() => {
-    const sub = watch(({ number, type }, { name }) => {
+    const { unsubscribe } = watch(async ({ number, type }, { name }) => {
       if (name === 'number' || name === 'type') {
-        console.log('search', number, type);
+        if (!!number && !!type) {
+          onSearch(number, type);
+        } else {
+          reset({ ...emptyOrder(), number, type });
+        }
       }
     });
-    return sub.unsubscribe;
-  }, [watch]);
+    return unsubscribe;
+  }, [watch, reset, onSearch, emptyOrder]);
 
   return (
     <div className="w-screen min-h-screen bg-neutral-900 flex flex-col items-center text-neutral-100">
