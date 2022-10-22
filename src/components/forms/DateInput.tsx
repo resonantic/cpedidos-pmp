@@ -69,13 +69,17 @@ export function DateInput<T extends FieldValues>({
               value={value}
               onAccept={onChange}
               inputRef={(el) => {
-                const ref = el as HTMLInputElement;
-                ref.disabled = !!disabled;
-                ref.className = clsx(
-                  'bg-transparent h-12 flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none',
-                  inputClassName
-                );
-                setInputRef(ref);
+                if (el) {
+                  const ref = el as HTMLInputElement;
+                  ref.disabled = !!disabled;
+                  ref.className = clsx(
+                    'bg-transparent h-12 flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none',
+                    inputClassName
+                  );
+                  setInputRef(ref);
+                } else {
+                  setInputRef(null);
+                }
               }}
             />
           )}
