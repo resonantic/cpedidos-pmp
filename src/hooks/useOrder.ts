@@ -50,7 +50,7 @@ async function saveOrder(order: Order): Promise<Order | null> {
 
   await setDoc(docRef, { ...order, id });
 
-  return order;
+  return { ...order, id };
 }
 
 async function deleteOrder(number: string, type: OrderType): Promise<boolean> {

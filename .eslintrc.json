@@ -25,6 +25,7 @@
     "global-require": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off",
+    "react/require-default-props": "off",
     "no-unused-expressions": ["error", { "allowTaggedTemplates": true }],
     "import/prefer-default-export": "off",
     "import/no-extraneous-dependencies": [

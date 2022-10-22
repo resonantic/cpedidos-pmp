@@ -1,47 +1,86 @@
 import { Eraser, FloppyDisk, Trash } from 'phosphor-react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '../../components/buttons/Button';
 import { NavBar } from '../../components/layout/NavBar';
 import { useDebouncedCallback } from '../../hooks/useDebouncedCallback';
 import { useOrder } from '../../hooks/useOrder';
 import { Order, OrderType } from '../../models/order';
+import { TextInput } from '../../components/forms/TextInput';
+import { DateInput } from '../../components/forms/DateInput';
+import { TextAreaInput } from '../../components/forms/TextAreaInput';
+import { SelectInput } from '../../components/forms/SelectInput';
 
 type IFormInputs = Order;
 
 export function Orders() {
-  const { register, handleSubmit, reset, watch, getValues } =
+  const [isSearching, setSearching] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(false);
+  const { register, handleSubmit, reset, watch, getValues, control } =
     useForm<IFormInputs>();
   const { emptyOrder, getOrder, saveOrder, deleteOrder } = useOrder();
 
+  const canSearch = !isLoading;
+
+  const canType =
+    !isLoading && !isSearching && !!getValues('number') && !!getValues('type');
+
+  const canSave =
+    !isLoading && !isSearching && !!getValues('number') && !!getValues('type');
+
+  const canClear =
+    !isLoading &&
+    (getValues('type') !== 'SE' ||
+      !!getValues('number') ||
+      !!getValues('arrivalDate') ||
+      !!getValues('secretary') ||
+      !!getValues('project') ||
+      !!getValues('description') ||
+      !!getValues('sendDate') ||
+      !!getValues('returnDate') ||
+      !!getValues('situation') ||
+      !!getValues('notes'));
+
+  const canDelete = !isLoading && !isSearching && !!getValues('id');
+
   const onSearch = useDebouncedCallback(
     async (number: string, type: OrderType) => {
+      if (!canSearch) return;
+      setSearching(true);
       const order = await getOrder(number, type);
       const formValues = getValues(['number', 'type']);
 
       if (number === formValues[0] && type === formValues[1]) {
         reset(order ?? { ...emptyOrder(), number, type });
       }
+      setSearching(false);
     },
     [getOrder, emptyOrder, reset, getValues],
     400
   );
 
   const onSave = handleSubmit(async (data: IFormInputs) => {
-    saveOrder(data);
+    if (!canSave) return;
+    setLoading(true);
+    const order = await saveOrder(data);
+    if (order) reset(order);
+    setLoading(false);
   });
 
-  const onClear = () => reset({ ...emptyOrder() });
+  const onClear = () => {
+    if (!canClear) return;
+    setLoading(true);
+    reset({ ...emptyOrder() });
+    setLoading(false);
+  };
 
   const onDelete = handleSubmit(async ({ number, type }: IFormInputs) => {
-    deleteOrder(number, type);
+    if (!canDelete) return;
+    setLoading(true);
+    const result = await deleteOrder(number, type);
+    if (result) reset({ ...emptyOrder() });
+    setLoading(false);
   });
-
-  const canSave = true;
-
-  const canClear = true;
-
-  const canDelete = true;
 
   useEffect(() => {
     const { unsubscribe } = watch(async ({ number, type }, { name }) => {
@@ -60,179 +99,104 @@ export function Orders() {
     <div className="w-screen min-h-screen bg-neutral-900 flex flex-col items-center text-neutral-100">
       <NavBar />
 
-      <form
-        onSubmit={onSave}
-        className="flex flex-col px-5 gap-4 mt-10 w-full max-w-5xl"
-      >
+      <form className="flex flex-col px-5 gap-4 mt-10 w-full max-w-5xl">
         <div className="flex flex-row gap-4">
-          <label htmlFor="number" className="flex flex-col gap-3 w-full">
-            <span className="text-neutral-100 font-sans font-semibold text-sm">
-              Número
-            </span>
+          <TextInput
+            className="flex flex-col gap-3 w-full"
+            id="number"
+            label="Número"
+            inputProps={{ ...register('number') }}
+            disabled={!canSearch}
+          />
 
-            <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400 ">
-              <input
-                {...register('number')}
-                type="text"
-                id="number"
-                className="bg-transparent flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none"
-              />
-            </div>
-          </label>
-
-          <label htmlFor="type" className="flex flex-col gap-3 w-full">
-            <span className="text-neutral-100 font-sans font-semibold text-sm">
-              Tipo
-            </span>
-
-            <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400 ">
-              <select
-                {...register('type')}
-                id="type"
-                className="bg-transparent flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none"
-              >
-                {['SE', 'RM', 'MEMORANDO', 'OUTRO'].map((type) => (
-                  <option value={type} key={type} className="bg-neutral-800">
-                    {type}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </label>
+          <SelectInput
+            className="flex flex-col gap-3 w-full"
+            id="type"
+            label="Tipo"
+            inputProps={{ ...register('type') }}
+            options={['SE', 'RM', 'MEMORANDO', 'OUTRO']}
+            disabled={!canSearch}
+          />
 
           <span className="w-full" />
         </div>
 
         <div className="flex flex-row gap-4">
-          <label htmlFor="arrivalDate" className="flex flex-col gap-3 w-full">
-            <span className="text-neutral-100 font-sans font-semibold text-sm">
-              Data de Chegada
-            </span>
+          <DateInput
+            className="flex flex-col gap-3 w-full"
+            id="arrivalDate"
+            label="Data de Chegada"
+            control={control}
+            disabled={!canType}
+          />
 
-            <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400">
-              <input
-                {...register('arrivalDate')}
-                type="text"
-                id="arrivalDate"
-                className="bg-transparent flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none"
-              />
-            </div>
-          </label>
+          <TextInput
+            className="flex flex-col gap-3 w-full"
+            id="secretary"
+            label="Secretaria"
+            inputProps={{ ...register('secretary') }}
+            disabled={!canType}
+          />
 
-          <label htmlFor="secretary" className="flex flex-col gap-3 w-full">
-            <span className="text-neutral-100 font-sans font-semibold text-sm">
-              Secretaria
-            </span>
-
-            <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400 ">
-              <input
-                {...register('secretary')}
-                type="text"
-                id="secretary"
-                className="bg-transparent flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none"
-              />
-            </div>
-          </label>
-
-          <label htmlFor="project" className="flex flex-col gap-3 w-full">
-            <span className="text-neutral-100 font-sans font-semibold text-sm">
-              Projeto
-            </span>
-
-            <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400 ">
-              <input
-                {...register('project')}
-                type="text"
-                id="project"
-                className="bg-transparent flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none"
-              />
-            </div>
-          </label>
+          <TextInput
+            className="flex flex-col gap-3 w-full"
+            id="project"
+            label="Projeto"
+            inputProps={{ ...register('project') }}
+            disabled={!canType}
+          />
         </div>
 
         <div className="flex flex-row gap-4">
-          <label htmlFor="description" className="flex flex-col gap-3 w-full">
-            <span className="text-neutral-100 font-sans font-semibold text-sm">
-              Descrição
-            </span>
-
-            <div className="flex items-center h-25 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400 ">
-              <textarea
-                {...register('description')}
-                id="description"
-                rows={4}
-                className="bg-transparent flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none resize-none"
-              />
-            </div>
-          </label>
+          <TextAreaInput
+            className="flex flex-col gap-3 w-full"
+            id="description"
+            label="Descrição"
+            rows={4}
+            inputProps={{ ...register('description') }}
+            disabled={!canType}
+          />
         </div>
 
         <div className="flex flex-row gap-4">
-          <label htmlFor="sendDate" className="flex flex-col gap-3 w-full">
-            <span className="text-neutral-100 font-sans font-semibold text-sm">
-              Data de Envio ao Financeiro
-            </span>
+          <DateInput
+            className="flex flex-col gap-3 w-full"
+            id="sendDate"
+            label="Data de Envio ao Financeiro"
+            control={control}
+            disabled={!canType}
+          />
 
-            <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400 ">
-              <input
-                {...register('sendDate')}
-                type="text"
-                id="sendDate"
-                className="bg-transparent flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none"
-              />
-            </div>
-          </label>
+          <DateInput
+            className="flex flex-col gap-3 w-full"
+            id="returnDate"
+            label="Data de Retorno do Financeiro"
+            control={control}
+            disabled={!canType}
+          />
 
-          <label htmlFor="returnDate" className="flex flex-col gap-3 w-full">
-            <span className="text-neutral-100 font-sans font-semibold text-sm">
-              Data de Retorno do Financeiro
-            </span>
-
-            <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400 ">
-              <input
-                {...register('returnDate')}
-                type="text"
-                id="returnDate"
-                className="bg-transparent flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none"
-              />
-            </div>
-          </label>
-
-          <label htmlFor="situation" className="flex flex-col gap-3 w-full">
-            <span className="text-neutral-100 font-sans font-semibold text-sm">
-              Situação
-            </span>
-
-            <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400 ">
-              <input
-                {...register('situation')}
-                type="text"
-                id="situation"
-                className="bg-transparent flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none"
-              />
-            </div>
-          </label>
+          <TextInput
+            className="flex flex-col gap-3 w-full"
+            id="situation"
+            label="Situação"
+            inputProps={{ ...register('situation') }}
+            disabled={!canType}
+          />
         </div>
 
         <div className="flex flex-row gap-4">
-          <label htmlFor="notes" className="flex flex-col gap-3 w-full">
-            <span className="text-neutral-100 font-sans font-semibold text-sm">
-              Observações
-            </span>
-
-            <div className="flex items-center h-25 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400 ">
-              <textarea
-                {...register('notes')}
-                id="notes"
-                rows={4}
-                className="bg-transparent flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none resize-none"
-              />
-            </div>
-          </label>
+          <TextAreaInput
+            className="flex flex-col gap-3 w-full"
+            id="notes"
+            label="Observações"
+            rows={4}
+            inputProps={{ ...register('notes') }}
+            disabled={!canType}
+          />
         </div>
 
         <div className="flex flex-row gap-4">
-          <Button type="submit" intent="success" disabled={!canSave}>
+          <Button intent="success" disabled={!canSave} onClick={onSave}>
             <FloppyDisk className="w-5 h-5" />
             <span>Salvar</span>
           </Button>

@@ -1,6 +1,9 @@
 import { Envelope, Lock, SignIn } from 'phosphor-react';
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 import { Button } from '../../components/buttons/Button';
+import { PasswordInput } from '../../components/forms/PasswordInput';
+import { TextInput } from '../../components/forms/TextInput';
 import { useAuth } from '../../hooks/useAuth';
 
 type IFormInputs = {
@@ -9,14 +12,18 @@ type IFormInputs = {
 };
 
 export function Login() {
+  const [isLoading, setLoading] = useState<boolean>(false);
   const { register, handleSubmit } = useForm<IFormInputs>();
   const { login } = useAuth();
 
-  const onSubmit = handleSubmit(({ email, password }: IFormInputs) => {
-    login(email, password);
-  });
+  const canSubmit = !isLoading;
 
-  const canSubmit = true;
+  const onSubmit = handleSubmit(async ({ email, password }: IFormInputs) => {
+    if (!canSubmit) return;
+    setLoading(true);
+    await login(email, password);
+    setLoading(false);
+  });
 
   return (
     <div className="w-screen h-screen bg-neutral-900 flex flex-col items-center justify-center text-neutral-100">
@@ -34,41 +41,27 @@ export function Login() {
         onSubmit={onSubmit}
         className="flex flex-col gap-4 items-stretch w-full max-w-sm mt-10"
       >
-        <label htmlFor="email" className="flex flex-col gap-3">
-          <span className="text-neutral-100 font-sans font-semibold text-sm">
-            E-mail
-          </span>
+        <TextInput
+          className="flex flex-col gap-3"
+          id="email"
+          label="E-mail"
+          inputProps={{
+            ...register('email'),
+            placeholder: 'usuario@exemplo.com.br',
+          }}
+          icon={<Envelope className="w-6 h-6 text-neutral-400" />}
+        />
 
-          <div className="flex items-center gap-3 h-12 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400">
-            <Envelope className="w-6 h-6 text-neutral-400" />
-
-            <input
-              {...register('email')}
-              type="email"
-              id="email"
-              placeholder="usuario@exemplo.com.br"
-              className="bg-transparent flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none"
-            />
-          </div>
-        </label>
-
-        <label htmlFor="password" className="flex flex-col gap-3">
-          <span className="text-neutral-100 font-sans font-semibold text-sm">
-            Senha
-          </span>
-
-          <div className="flex items-center gap-3 h-12 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400">
-            <Lock className="w-6 h-6 text-neutral-400" />
-
-            <input
-              {...register('password')}
-              type="password"
-              id="password"
-              placeholder="********"
-              className="bg-transparent flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none"
-            />
-          </div>
-        </label>
+        <PasswordInput
+          className="flex flex-col gap-3"
+          id="password"
+          label="Senha"
+          inputProps={{
+            ...register('password'),
+            placeholder: '********',
+          }}
+          icon={<Lock className="w-6 h-6 text-neutral-400" />}
+        />
 
         <Button type="submit" intent="primary" disabled={!canSubmit}>
           <SignIn className="w-5 h-5" />
