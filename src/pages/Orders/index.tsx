@@ -1,5 +1,5 @@
 import { Eraser, FloppyDisk, Trash } from 'phosphor-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '../../components/buttons/Button';
 import { NavBar } from '../../components/layout/NavBar';
@@ -14,6 +14,7 @@ import { SelectInput } from '../../components/forms/SelectInput';
 type IFormInputs = Order;
 
 export function Orders() {
+  const numberInputRef = useRef<HTMLInputElement>(null);
   const [isSearching, setSearching] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(false);
   const { register, handleSubmit, reset, watch, getValues, control } =
@@ -71,6 +72,7 @@ export function Orders() {
     if (!canClear) return;
     setLoading(true);
     reset({ ...emptyOrder() });
+    numberInputRef.current?.focus();
     setLoading(false);
   };
 
@@ -105,7 +107,11 @@ export function Orders() {
             className="flex flex-col gap-3 w-full"
             id="number"
             label="Número"
-            inputProps={{ ...register('number') }}
+            inputProps={{
+              ...register('number'),
+              autoFocus: true,
+              ref: numberInputRef,
+            }}
             disabled={!canSearch}
           />
 
