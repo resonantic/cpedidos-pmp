@@ -1,10 +1,13 @@
 import clsx from 'clsx';
-import { InputHTMLAttributes, ReactNode } from 'react';
+import { DetailedHTMLProps, InputHTMLAttributes, ReactNode } from 'react';
 
 interface PasswordInputProps {
   id: string;
   label: string;
-  inputProps: InputHTMLAttributes<HTMLInputElement>;
+  inputProps: DetailedHTMLProps<
+    InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  >;
   className: string;
   inputClassName?: string;
   disabled?: boolean;

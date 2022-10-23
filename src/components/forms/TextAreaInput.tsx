@@ -1,10 +1,13 @@
 import clsx from 'clsx';
-import { TextareaHTMLAttributes } from 'react';
+import { DetailedHTMLProps, TextareaHTMLAttributes } from 'react';
 
 interface TextAreaInputProps {
   id: string;
   label: string;
-  inputProps: TextareaHTMLAttributes<HTMLTextAreaElement>;
+  inputProps: DetailedHTMLProps<
+    TextareaHTMLAttributes<HTMLTextAreaElement>,
+    HTMLTextAreaElement
+  >;
   className: string;
   rows: number;
   inputClassName?: string;

@@ -1,10 +1,13 @@
 import clsx from 'clsx';
-import { SelectHTMLAttributes } from 'react';
+import { DetailedHTMLProps, SelectHTMLAttributes } from 'react';
 
 interface SelectInputProps {
   id: string;
   label: string;
-  inputProps: SelectHTMLAttributes<HTMLSelectElement>;
+  inputProps: DetailedHTMLProps<
+    SelectHTMLAttributes<HTMLSelectElement>,
+    HTMLSelectElement
+  >;
   className: string;
   inputClassName?: string;
   options: string[];
