@@ -11,8 +11,8 @@ import { NavLinkButton } from '../buttons/NavLinkButton';
 export function NavBar() {
   const { user, logout } = useAuth();
 
-  const onLogout = () => {
-    logout();
+  const onLogout = async () => {
+    await logout();
   };
 
   return (

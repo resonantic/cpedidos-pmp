@@ -34,16 +34,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null | undefined>(undefined);
 
   useEffect(() => {
-    const sub = onAuthStateChanged(auth, setUser);
-    return sub;
+    return onAuthStateChanged(auth, setUser);
   }, []);
 
   const login = useCallback(async (email: string, password: string) => {
-    signInWithEmailAndPassword(auth, email, password);
+    await signInWithEmailAndPassword(auth, email, password);
   }, []);
 
   const logout = useCallback(async () => {
-    signOut(auth);
+    await signOut(auth);
   }, []);
 
   const providerValue = useMemo(
