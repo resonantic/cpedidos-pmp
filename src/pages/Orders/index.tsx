@@ -1,5 +1,5 @@
 import { Eraser, FloppyDisk, Trash } from 'phosphor-react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '../../components/buttons/Button';
 import { NavBar } from '../../components/layout/NavBar';
@@ -14,7 +14,6 @@ import { SelectInput } from '../../components/forms/SelectInput';
 type IFormInputs = Order;
 
 export function Orders() {
-  const numberInputRef = useRef<HTMLInputElement>(null);
   const [isSearching, setSearching] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(false);
   const { register, handleSubmit, reset, watch, getValues, control } =
@@ -24,25 +23,25 @@ export function Orders() {
   const canSearch = !isLoading;
 
   const canType =
-    !isLoading && !isSearching && !!getValues('number') && !!getValues('type');
+    !isLoading && !isSearching && !!watch('number') && !!watch('type');
 
   const canSave =
-    !isLoading && !isSearching && !!getValues('number') && !!getValues('type');
+    !isLoading && !isSearching && !!watch('number') && !!watch('type');
 
   const canClear =
     !isLoading &&
-    (getValues('type') !== 'SE' ||
-      !!getValues('number') ||
-      !!getValues('arrivalDate') ||
-      !!getValues('secretary') ||
-      !!getValues('project') ||
-      !!getValues('description') ||
-      !!getValues('sendDate') ||
-      !!getValues('returnDate') ||
-      !!getValues('situation') ||
-      !!getValues('notes'));
+    (watch('type') !== 'SE' ||
+      !!watch('number') ||
+      !!watch('arrivalDate') ||
+      !!watch('secretary') ||
+      !!watch('project') ||
+      !!watch('description') ||
+      !!watch('sendDate') ||
+      !!watch('returnDate') ||
+      !!watch('situation') ||
+      !!watch('notes'));
 
-  const canDelete = !isLoading && !isSearching && !!getValues('id');
+  const canDelete = !isLoading && !isSearching && !!watch('id');
 
   const onSearch = useDebouncedCallback(
     async (number: string, type: OrderType) => {
@@ -72,7 +71,6 @@ export function Orders() {
     if (!canClear) return;
     setLoading(true);
     reset({ ...emptyOrder() });
-    numberInputRef.current?.focus();
     setLoading(false);
   };
 
@@ -110,7 +108,6 @@ export function Orders() {
             inputProps={{
               ...register('number'),
               autoFocus: true,
-              ref: numberInputRef,
             }}
             disabled={!canSearch}
           />
