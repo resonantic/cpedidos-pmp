@@ -1,25 +1,26 @@
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
-import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { IMaskInput } from 'react-imask';
 
-interface DateInputProps<T extends FieldValues> {
-  id: Path<T>;
+interface DateInputProps {
+  id: string;
   label: string;
   className: string;
   inputClassName?: string;
-  control: Control<T, unknown>;
   disabled?: boolean;
+  value: string;
+  onChange: (value: string) => void;
 }
 
-export function DateInput<T extends FieldValues>({
+export function DateInput({
   id,
   label,
   className,
   inputClassName,
-  control,
   disabled,
-}: DateInputProps<T>) {
+  value,
+  onChange,
+}: DateInputProps) {
   const [inputRef, setInputRef] = useState<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -46,7 +47,7 @@ export function DateInput<T extends FieldValues>({
   };
 
   return (
-    <label htmlFor={id} className={className}>
+    <label htmlFor={id} className={clsx('flex flex-col gap-3', className)}>
       <span
         className={clsx('font-sans font-semibold text-sm', {
           'text-neutral-100': !disabled,
@@ -57,32 +58,26 @@ export function DateInput<T extends FieldValues>({
       </span>
 
       <div className="flex items-center h-12 py-4 px-3 rounded w-full bg-neutral-800 focus-within:ring-2 ring-indigo-400">
-        <Controller
-          control={control}
-          name={id}
-          render={({ field: { onChange, value } }) => (
-            <IMaskInput
-              mask={mask}
-              pattern={pattern}
-              format={format}
-              parse={parse}
-              value={value}
-              onAccept={onChange}
-              inputRef={(el) => {
-                if (el) {
-                  const ref = el as HTMLInputElement;
-                  ref.disabled = !!disabled;
-                  ref.className = clsx(
-                    'bg-transparent h-12 flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none',
-                    inputClassName
-                  );
-                  setInputRef(ref);
-                } else {
-                  setInputRef(null);
-                }
-              }}
-            />
-          )}
+        <IMaskInput
+          mask={mask}
+          pattern={pattern}
+          format={format}
+          parse={parse}
+          value={value}
+          onAccept={(val) => onChange(val as string)}
+          inputRef={(el) => {
+            if (el) {
+              const ref = el as HTMLInputElement;
+              ref.disabled = !!disabled;
+              ref.className = clsx(
+                'bg-transparent h-12 flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none',
+                inputClassName
+              );
+              setInputRef(ref);
+            } else {
+              setInputRef(null);
+            }
+          }}
         />
       </div>
     </label>

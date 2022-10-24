@@ -11,9 +11,9 @@ import { Order, OrderType } from '../models/order';
 
 const ordersRef = collection(db, 'orders') as CollectionReference<Order>;
 
-function emptyOrder(): Order {
+function emptyOrder(id: string | null = null): Order {
   return {
-    id: null,
+    id,
     number: '',
     type: 'SE',
     arrivalDate: '',
@@ -65,5 +65,10 @@ async function deleteOrder(number: string, type: OrderType): Promise<boolean> {
 }
 
 export function useOrder() {
-  return { emptyOrder, getOrder, saveOrder, deleteOrder };
+  return {
+    emptyOrder,
+    getOrder,
+    saveOrder,
+    deleteOrder,
+  };
 }

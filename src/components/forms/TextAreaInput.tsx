@@ -1,30 +1,36 @@
 import clsx from 'clsx';
-import { DetailedHTMLProps, TextareaHTMLAttributes } from 'react';
+import { ChangeEvent } from 'react';
 
 interface TextAreaInputProps {
   id: string;
   label: string;
-  inputProps: DetailedHTMLProps<
-    TextareaHTMLAttributes<HTMLTextAreaElement>,
-    HTMLTextAreaElement
-  >;
-  className: string;
-  rows: number;
+  className?: string;
   inputClassName?: string;
   disabled?: boolean;
+  rows?: number;
+  placeholder?: string;
+  value: string;
+  onChange: (value: string) => void;
 }
 
 export function TextAreaInput({
   id,
   label,
-  inputProps,
   className,
   inputClassName,
-  rows,
   disabled,
+  rows,
+  placeholder,
+  value,
+  onChange,
 }: TextAreaInputProps) {
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const val = e.target.value;
+    onChange(val);
+  };
+
   return (
-    <label htmlFor={id} className={className}>
+    <label htmlFor={id} className={clsx('flex flex-col gap-3', className)}>
       <span
         className={clsx('font-sans font-semibold text-sm', {
           'text-neutral-100': !disabled,
@@ -43,7 +49,9 @@ export function TextAreaInput({
             'bg-transparent flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none resize-none',
             inputClassName
           )}
-          {...inputProps}
+          placeholder={placeholder}
+          value={value}
+          onChange={handleChange}
         />
       </div>
     </label>

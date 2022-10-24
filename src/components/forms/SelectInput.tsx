@@ -1,30 +1,34 @@
 import clsx from 'clsx';
-import { DetailedHTMLProps, SelectHTMLAttributes } from 'react';
+import { ChangeEvent } from 'react';
 
-interface SelectInputProps {
+interface SelectInputProps<T extends string> {
   id: string;
   label: string;
-  inputProps: DetailedHTMLProps<
-    SelectHTMLAttributes<HTMLSelectElement>,
-    HTMLSelectElement
-  >;
-  className: string;
+  className?: string;
   inputClassName?: string;
-  options: string[];
   disabled?: boolean;
+  options: T[];
+  value: string;
+  onChange: (value: T) => void;
 }
 
-export function SelectInput({
+export function SelectInput<T extends string>({
   id,
   label,
-  inputProps,
   className,
   inputClassName,
-  options,
   disabled,
-}: SelectInputProps) {
+  options,
+  value,
+  onChange,
+}: SelectInputProps<T>) {
+  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const val = e.target.value as T;
+    onChange(val);
+  };
+
   return (
-    <label htmlFor={id} className={className}>
+    <label htmlFor={id} className={clsx('flex flex-col gap-3', className)}>
       <span
         className={clsx('font-sans font-semibold text-sm', {
           'text-neutral-100': !disabled,
@@ -42,7 +46,8 @@ export function SelectInput({
             'bg-transparent h-12 flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none',
             inputClassName
           )}
-          {...inputProps}
+          value={value}
+          onChange={handleChange}
         >
           {options.map((option) => (
             <option value={option} key={option} className="bg-neutral-800">

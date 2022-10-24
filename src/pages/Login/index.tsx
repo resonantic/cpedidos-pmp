@@ -1,29 +1,32 @@
 import { Envelope, Lock, SignIn } from 'phosphor-react';
-import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { Button } from '../../components/buttons/Button';
 import { PasswordInput } from '../../components/forms/PasswordInput';
 import { TextInput } from '../../components/forms/TextInput';
 import { useAuth } from '../../hooks/useAuth';
 
-type IFormInputs = {
+interface FormData {
   email: string;
   password: string;
-};
+}
 
 export function Login() {
   const [isLoading, setLoading] = useState<boolean>(false);
-  const { register, handleSubmit } = useForm<IFormInputs>();
+  const [formData, setFormData] = useState<FormData>({
+    email: '',
+    password: '',
+  });
   const { login } = useAuth();
 
-  const canSubmit = !isLoading;
+  const canSubmit = !isLoading && !!formData.email && !!formData.password;
 
-  const onSubmit = handleSubmit(async ({ email, password }: IFormInputs) => {
+  const onSubmit = async (e: FormEvent) => {
+    e.preventDefault();
     if (!canSubmit) return;
     setLoading(true);
-    await login(email, password);
+    await login(formData.email, formData.password);
     setLoading(false);
-  });
+  };
 
   return (
     <div className="w-screen h-screen bg-neutral-900 flex flex-col items-center justify-center text-neutral-100">
@@ -42,25 +45,22 @@ export function Login() {
         className="flex flex-col gap-4 items-stretch w-full max-w-sm mt-10"
       >
         <TextInput
-          className="flex flex-col gap-3"
           id="email"
           label="E-mail"
-          inputProps={{
-            ...register('email'),
-            placeholder: 'usuario@exemplo.com.br',
-          }}
+          placeholder="usuario@exemplo.com.br"
           icon={<Envelope className="w-6 h-6 text-neutral-400" />}
+          value={formData.email}
+          onChange={(email) => setFormData({ ...formData, email })}
         />
 
         <PasswordInput
           className="flex flex-col gap-3"
           id="password"
           label="Senha"
-          inputProps={{
-            ...register('password'),
-            placeholder: '********',
-          }}
+          placeholder="********"
           icon={<Lock className="w-6 h-6 text-neutral-400" />}
+          value={formData.password}
+          onChange={(password) => setFormData({ ...formData, password })}
         />
 
         <Button type="submit" intent="primary" disabled={!canSubmit}>

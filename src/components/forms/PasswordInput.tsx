@@ -1,30 +1,36 @@
 import clsx from 'clsx';
-import { DetailedHTMLProps, InputHTMLAttributes, ReactNode } from 'react';
+import { ChangeEvent, ReactNode } from 'react';
 
 interface PasswordInputProps {
   id: string;
   label: string;
-  inputProps: DetailedHTMLProps<
-    InputHTMLAttributes<HTMLInputElement>,
-    HTMLInputElement
-  >;
-  className: string;
+  className?: string;
   inputClassName?: string;
   disabled?: boolean;
   icon?: ReactNode;
+  placeholder?: string;
+  value: string;
+  onChange: (value: string) => void;
 }
 
 export function PasswordInput({
   id,
   label,
-  inputProps,
   className,
   inputClassName,
-  icon,
   disabled,
+  icon,
+  placeholder,
+  value,
+  onChange,
 }: PasswordInputProps) {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    onChange(val);
+  };
+
   return (
-    <label htmlFor={id} className={className}>
+    <label htmlFor={id} className={clsx('flex flex-col gap-3', className)}>
       <span
         className={clsx('font-sans font-semibold text-sm', {
           'text-neutral-100': !disabled,
@@ -45,7 +51,9 @@ export function PasswordInput({
             'bg-transparent h-12 flex-1 text-neutral-100 text-xs placeholder:text-neutral-400 outline-none',
             inputClassName
           )}
-          {...inputProps}
+          placeholder={placeholder}
+          value={value}
+          onChange={handleChange}
         />
       </div>
     </label>
