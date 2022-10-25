@@ -11,7 +11,8 @@
     "lint": "eslint --ext .js,.ts,.jsx,.tsx src",
     "format": "yarn run lint --fix & yarn prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
     "test": "vitest",
-    "coverage": "vitest --coverage"
+    "coverage": "vitest --coverage",
+    "webstorm-integration": "vitest --reporter=dot --reporter=json --outputFile=.vitest-result.json"
   },
   "dependencies": {
     "clsx": "^1.2.1",
