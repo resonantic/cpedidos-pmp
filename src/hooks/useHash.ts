@@ -8,7 +8,7 @@ const setHash =
     hashs[id] = `${hashNum}_${args.join('_')}`;
   };
 
-const getHash = (id: string) => () => hashs[id];
+const getHash = (id: string) => () => hashs[id] ?? '';
 
 const compareHash = (id: string) => (hash: string) => hash === hashs[id];
 
